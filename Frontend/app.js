@@ -1,4 +1,4 @@
-const BACKEND_BASE_URL = 'http://127.0.0.1:3000';
+const BACKEND_BASE_URL = 'https://complaints-registration-platform-full-52n8.onrender.com';
 const API_BASE_URL = `${BACKEND_BASE_URL}/api`;
 
 // State management
@@ -56,7 +56,7 @@ function renderView() {
     viewContainer.innerHTML = '';
     const templateId = `${state.currentView}-template`;
     const template = document.getElementById(templateId);
-    
+
     if (!template) {
         console.error(`Template ${templateId} not found`);
         return;
@@ -169,7 +169,7 @@ async function handleVerifyOTP(e) {
     e.preventDefault();
     const otp = document.getElementById('otp-code').value;
     state.tempRegistration.otp = otp;
-    
+
     // In this flow, we just proceed to password setup locally, 
     // and send OTP during the final registration call as per BACKEND.md requirements
     // Wait, BACKEND.md says: POST /api/auth/register accepts email, otp, password.
@@ -215,7 +215,7 @@ async function handleGetAIQuestion() {
     if (!text) return showToast('Please describe the issue first', 'error');
 
     state.currentComplaint.text = text;
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/ai/question`, {
             method: 'POST',
@@ -227,7 +227,7 @@ async function handleGetAIQuestion() {
         if (response.ok) {
             const data = await response.json();
             state.currentComplaint.aiQuestion = data.question;
-            
+
             document.getElementById('step-1').classList.add('hidden');
             document.getElementById('step-2').classList.remove('hidden');
             document.getElementById('display-ai-question').innerText = data.question;
@@ -330,7 +330,7 @@ function renderComplaints(complaints, containerId, isAdmin = false) {
 
 logoutBtn.onclick = async () => {
     try {
-        await fetch(`${API_BASE_URL}/auth/logout`, { 
+        await fetch(`${API_BASE_URL}/auth/logout`, {
             method: 'POST',
             credentials: 'include'
         });
