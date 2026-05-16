@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeGuard | Complaint Registration Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav id="main-nav" class="hidden">
+            <div class="nav-content">
+                <div class="logo">SafeGuard</div>
+                <div class="nav-links">
+                    <button id="logout-btn" class="nav-btn">Logout</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main id="view-container">
+            <!-- Views will be injected here by app.js -->
+            <div class="loader-container">
+                <div class="loader"></div>
+            </div>
+        </main>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container"></div>
+    </div>
+
+    <!-- Templates for different views -->
+    <template id="register-template">
+        <div class="auth-card">
+            <h1>Create Account</h1>
+            <p class="subtitle">Join SafeGuard to raise your voice.</p>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="reg-name">Full Name</label>
+                    <input type="text" id="reg-name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" placeholder="john@example.com" required>
+                </div>
+                <button type="submit" class="primary-btn">Send OTP</button>
+            </form>
+            <p class="auth-footer">Already have an account? <a href="#" id="go-to-login">Login here</a></p>
+        </div>
+    </template>
+
+    <template id="otp-template">
+        <div class="auth-card">
+            <h1>Verify OTP</h1>
+            <p class="subtitle">Enter the 6-digit code sent to your email.</p>
+            <form id="otp-form">
+                <div class="form-group">
+                    <input type="text" id="otp-code" placeholder="000000" maxlength="6" pattern="\d{6}" required>
+                </div>
+                <button type="submit" class="primary-btn">Verify Code</button>
+            </form>
+        </div>
+    </template>
+
+    <template id="password-template">
+        <div class="auth-card">
+            <h1>Set Password</h1>
+            <p class="subtitle">Secure your account with a strong password.</p>
+            <form id="password-form">
+                <div class="form-group">
+                    <label for="new-password">Password</label>
+                    <input type="password" id="new-password" placeholder="••••••••" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="primary-btn">Complete Registration</button>
+            </form>
+        </div>
+    </template>
+
+    <template id="login-template">
+        <div class="auth-card">
+            <h1>Welcome Back</h1>
+            <p class="subtitle">Login to manage your complaints.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="primary-btn">Login</button>
+            </form>
+            <p class="auth-footer">Don't have an account? <a href="#" id="go-to-register">Register here</a></p>
+        </div>
+    </template>
+
+    <template id="user-dashboard-template">
+        <div class="dashboard">
+            <header class="dash-header">
+                <div>
+                    <h1>My Complaints</h1>
+                    <p>Track the status of your reported issues.</p>
+                </div>
+                <button id="new-complaint-btn" class="primary-btn">+ New Complaint</button>
+            </header>
+            <div id="complaints-list" class="complaints-grid">
+                <!-- Complaints will be loaded here -->
+            </div>
+        </div>
+    </template>
+
+    <template id="submit-complaint-template">
+        <div class="complaint-form-container">
+            <button id="back-to-dash" class="back-link">← Back to Dashboard</button>
+            <h1>Submit New Complaint</h1>
+            
+            <div id="step-1">
+                <div class="form-group">
+                    <label for="complaint-text">What's the issue?</label>
+                    <textarea id="complaint-text" placeholder="Describe your complaint in detail..." rows="5" required></textarea>
+                </div>
+                <button id="get-ai-question-btn" class="secondary-btn">Next: AI Clarification</button>
+            </div>
+
+            <div id="step-2" class="hidden">
+                <div class="ai-question-box">
+                    <span class="ai-badge">AI Follow-up</span>
+                    <p id="display-ai-question"></p>
+                </div>
+                <div class="form-group">
+                    <label for="ai-answer">Your Answer</label>
+                    <textarea id="ai-answer" placeholder="Provide more details here..." rows="3" required></textarea>
+                </div>
+                <button id="final-submit-btn" class="primary-btn">Submit Complaint</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="admin-dashboard-template">
+        <div class="dashboard">
+            <header class="dash-header">
+                <div>
+                    <h1>Admin Console</h1>
+                    <p>Reviewing all submitted complaints across the platform.</p>
+                </div>
+            </header>
+            <div id="admin-complaints-list" class="complaints-grid">
+                <!-- All complaints will be loaded here -->
+            </div>
+        </div>
+    </template>
+
+    <script src="app.js"></script>
+</body>
+</html>
