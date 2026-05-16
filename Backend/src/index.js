@@ -18,7 +18,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret';
 
 // Middleware
 app.use(cors({
-  origin: [process.env.FRONTEND_URL || 'http://localhost:5500', 'http://127.0.0.1:5500'],
+  origin: [
+    process.env.FRONTEND_URL || 'http://localhost:5500', 
+    'http://127.0.0.1:5500',
+    'https://cop-ash.github.io'
+  ],
   credentials: true,
 }));
 app.use(express.json());
@@ -115,9 +119,9 @@ app.post('/api/auth/login', async (req, res) => {
     const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
 
     res.cookie('token', token, {
-      httpOnly: false, // As requested
-      secure: false,   // As requested
-      sameSite: 'lax', // As requested
+      httpOnly: false, 
+      secure: true,    // Required for cross-site cookies
+      sameSite: 'none', // Required for cross-site requests (GitHub Pages -> Render)
       maxAge: 24 * 60 * 60 * 1000
     });
 
