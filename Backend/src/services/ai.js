@@ -7,9 +7,8 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 export const getAIQuestion = async (complaintText) => {
   try {
-    // Using gemini-1.5-flash as it is highly available and fast. 
-    // The requirement mentioned gemini-2.5-flash-lite, which might be a future model or typo.
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    // Changed to 'gemini-pro' as it is a verified stable model
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
     const prompt = `You are a helpful assistant for a complaint registration platform. 
     A user has submitted the following complaint: "${complaintText}".
@@ -20,7 +19,7 @@ export const getAIQuestion = async (complaintText) => {
     const response = await result.response;
     return response.text().trim();
   } catch (error) {
-    console.error('Error getting AI question:', error);
+    console.error('❌ Gemini API error in getAIQuestion:', error);
     return "Could you provide more details about this issue?"; // Fallback
   }
 };
